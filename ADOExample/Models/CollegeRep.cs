@@ -9,7 +9,6 @@ namespace ADOExample.Models
         public CollegeRep(IConfiguration configuration) 
         {
             _configuration = configuration;
-
             ConnectionSring = _configuration["ConnectionString:DefaultConnection"];
         }
        
@@ -78,8 +77,26 @@ namespace ADOExample.Models
         {
             using (SqlConnection con = new SqlConnection(ConnectionSring))
             {
-                SqlCommand sqlCommand = new SqlCommand("update ")
+                SqlCommand sqlCommand = new SqlCommand("update college set Name = @name , place = @place where id = @id", con);
+                sqlCommand.Parameters.AddWithValue("@name", college.Name);
+                sqlCommand.Parameters.AddWithValue("@place", college.Place);
+                sqlCommand.Parameters.AddWithValue("@id", id);
+                con.Open();
+                sqlCommand.ExecuteNonQuery();
+
             }
+        }
+
+        public void DeleteCollege(int id)
+        {
+            using (SqlConnection con = new SqlConnection(ConnectionSring))
+            {
+                SqlCommand command = new SqlCommand("delete from college where id = @id", con);
+                command.Parameters.AddWithValue("@id", id);
+                con.Open();
+                command.ExecuteNonQuery();
+            }
+        }
 
 
 

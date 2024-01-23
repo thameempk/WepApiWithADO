@@ -37,5 +37,22 @@ namespace ADOExample.Controllers
             _collegeRep.AddCollege(college);
             return Ok();
         }
+
+        [HttpPut("{id}")]
+        public ActionResult UpdateCollege(int id, [FromBody] College college)
+        {
+            _collegeRep.UpdateCollege(id, college);
+            return Ok("set");
+        }
+
+        [HttpDelete("{id}")]
+
+        public ActionResult DeleteCollege(int id)
+        {
+            _collegeRep.DeleteCollege(id);
+            return Ok();
+        }
+
+
     }
 }
